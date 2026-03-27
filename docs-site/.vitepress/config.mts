@@ -22,6 +22,7 @@ const enSidebar = [
       { text: 'Installation', link: '/guide/installation' },
       { text: 'Quick Start', link: '/guide/quick-start' },
       { text: 'Configuration', link: '/guide/configuration' },
+      { text: 'Upgrading', link: '/guide/upgrading' },
     ],
   },
   {
@@ -51,6 +52,7 @@ const viSidebar = [
       { text: 'Cài đặt', link: '/vi/guide/installation' },
       { text: 'Bắt đầu nhanh', link: '/vi/guide/quick-start' },
       { text: 'Cấu hình', link: '/vi/guide/configuration' },
+      { text: 'Cập nhật phiên bản', link: '/vi/guide/upgrading' },
     ],
   },
   {

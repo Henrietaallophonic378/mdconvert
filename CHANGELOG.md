@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.0.3 — 2026-03-27
+
+Test suite và CI pipeline.
+
+### Added
+
+- **98 test cases** — Jest + ts-jest covering `lib/` và `app/api/`
+- **11 test files**: upload validation, settings, cleanup, zip, DOCX/PDF converters, Gemini batch, API routes
+- **GitHub Actions CI** — tự động chạy tests trên push/PR vào `main`
+- **Coverage report** — upload artifact sau mỗi CI run
+
+---
+
 ## v1.0.2 — 2026-03-27
 
 Security fixes và medium improvements từ code review.
