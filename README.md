@@ -2,6 +2,7 @@
 
 **Convert Word & PDF to AI-ready Markdown with image descriptions**
 
+[![Tests](https://github.com/nhannguyen09/mdconvert/actions/workflows/test.yml/badge.svg)](https://github.com/nhannguyen09/mdconvert/actions/workflows/test.yml)
 [![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
 A self-hosted tool that converts `.docx` and `.pdf` files into clean Markdown optimized for AI agents, Claude Projects, and Claude Code. Images are extracted and described by AI vision — no manual work needed.
