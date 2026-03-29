@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.0.4 — 2026-03-29
+
+Security hardening.
+
+### Security
+
+- **Ghostscript `-dSAFER`** — Thêm flag `-dSAFER` vào tất cả `gs` invocations (`lib/compress/pdf.ts`, `lib/converters/pdf.ts`). Ngăn GS < 9.27 thực thi pipe device (`%pipe%cmd`) dẫn đến RCE.
+- **Encryption key tách riêng** — `lib/crypto.ts` ưu tiên `ENCRYPTION_KEY` env var, fallback `NEXTAUTH_SECRET` để tương thích ngược. Tránh dùng chung 1 secret cho cả JWT lẫn AES-256.
+- **Cleanup endpoint** — Bỏ `Host` header bypass (attacker-controllable). Chỉ cho phép request có đúng `x-cleanup-secret` header.
+- **Setup TOCTOU race** — Dùng `prisma.$transaction` để count + create user atomic. Chặn 2 concurrent request tạo được 2 admin cùng lúc.
+- **Path traversal trong cleanup** — Validate `originalPath` từ DB nằm trong `UPLOAD_DIR` trước khi gọi `fs.rm`. Ngăn DB compromise dẫn đến arbitrary file deletion.
+
+---
+
 ## v1.0.3 — 2026-03-27
 
 Test suite và CI pipeline.
