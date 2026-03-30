@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.0.5 — 2026-03-30
+
+### Bug Fix
+
+- **Upload fail với filename đặc biệt** — `sanitizePath` trong `lib/compress/pdf.ts` sai khi chặn ký tự `$`, `` ` ``, `;` trong tên file. Vì code dùng `execFile` (args dạng array, không qua shell), các ký tự này hoàn toàn an toàn. Chỉ null byte (`\0`) mới bị reject. File tên có `$2024`, `` `backup` ``, v.v. giờ upload bình thường.
+
+---
+
 ## v1.0.4 — 2026-03-29
 
 Security hardening.
