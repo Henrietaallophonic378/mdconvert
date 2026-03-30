@@ -83,22 +83,35 @@ export async function convertPdf(
   onProgress?: (text: string) => void
 ): Promise<PdfConvertResult> {
   // Bước 1: Compress PDF với Ghostscript
+  // Fallback: nếu GS crash/segfault (PDF corrupt hoặc zlib error) → dùng file gốc
   const compressedPath = path.join(outputDir, 'compressed.pdf');
-  const { compressedSize } = await compressPdf(pdfPath, compressedPath, compressLevel);
+  let compressedSize: number;
+  let pdfToProcess: string;
+
+  try {
+    const result = await compressPdf(pdfPath, compressedPath, compressLevel);
+    compressedSize = result.compressedSize;
+    pdfToProcess = compressedPath;
+  } catch (err) {
+    console.warn('[convertPdf] Ghostscript compress failed, dùng file gốc:', err instanceof Error ? err.message : err);
+    const stat = await fs.stat(pdfPath);
+    compressedSize = stat.size;
+    pdfToProcess = pdfPath;
+  }
 
   // X1: Đọc settings từ DB
   const pagesPerBatch = Math.max(1, parseInt(await getSetting('pdf_pages_per_batch'), 10) || 20);
   const maxPages      = Math.max(0, parseInt(await getSetting('pdf_max_pages'), 10) || 0);
 
   // X2: Đếm trang đáng tin cậy
-  const pageCount = await countPdfPages(compressedPath);
+  const pageCount = await countPdfPages(pdfToProcess);
 
   let markdown: string;
 
   if (pageCount <= pagesPerBatch || pageCount === 0) {
     // PDF ngắn hoặc không đếm được — gửi toàn bộ file
     onProgress?.('Đang xử lý tài liệu...');
-    markdown = await convertPdfWithAI(compressedPath);
+    markdown = await convertPdfWithAI(pdfToProcess);
   } else {
     // X1: Giới hạn trang nếu maxPages > 0
     const effectivePages = maxPages > 0 ? Math.min(pageCount, maxPages) : pageCount;
@@ -125,7 +138,7 @@ export async function convertPdf(
           const lastPage  = Math.min((batchIdx + 1) * pagesPerBatch, effectivePages);
           const batchPath = path.join(outputDir, `batch-${batchIdx + 1}.pdf`);
 
-          await splitPdfPages(compressedPath, batchPath, firstPage, lastPage);
+          await splitPdfPages(pdfToProcess, batchPath, firstPage, lastPage);
           const batchMd = await convertPdfWithAI(batchPath);
           await fs.unlink(batchPath).catch(() => {});
           return batchMd;
