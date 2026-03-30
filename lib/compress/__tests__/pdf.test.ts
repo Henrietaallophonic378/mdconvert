@@ -46,18 +46,24 @@ describe('compressPdf — Ghostscript args', () => {
     }
   });
 
-  it('rejects path with shell injection characters', async () => {
+  // execFile truyền args dạng array — không qua shell — nên $, `;`, backtick trong
+  // tên file là hoàn toàn an toàn. Chỉ null byte mới bị reject.
+  it('allows path with shell metacharacters (safe with execFile)', async () => {
+    mockExecFile.mockImplementation((cmd: any, args: any, callback: any) => {
+      callback(null, '', '');
+    });
     const { compressPdf } = await import('../pdf');
+    // Không throw — execFile không interpret shell metacharacters
     await expect(
-      compressPdf('/tmp/evil;rm -rf /.pdf', '/tmp/output.pdf', 'ebook')
-    ).rejects.toThrow(/ký tự không hợp lệ/i);
+      compressPdf('/tmp/file$name;test.pdf', '/tmp/output.pdf', 'ebook')
+    ).resolves.toBeDefined();
   });
 
-  it('rejects path with backtick injection', async () => {
+  it('rejects path with null byte', async () => {
     const { compressPdf } = await import('../pdf');
     await expect(
-      compressPdf('/tmp/evil`whoami`.pdf', '/tmp/output.pdf', 'ebook')
-    ).rejects.toThrow();
+      compressPdf('/tmp/evil\0.pdf', '/tmp/output.pdf', 'ebook')
+    ).rejects.toThrow(/ký tự không hợp lệ/i);
   });
 
   it('falls back to ebook for invalid preset', async () => {

@@ -12,8 +12,9 @@ export type CompressLevel = 'screen' | 'ebook' | 'printer' | 'prepress';
 const VALID_LEVELS = new Set<string>(['screen', 'ebook', 'printer', 'prepress']);
 
 function sanitizePath(p: string): string {
-  // execFile truyền arg như array (không qua shell) → &, space, brackets an toàn
-  if (/[;|`$<>\\]/.test(p)) {
+  // execFile truyền arg dạng array — không qua shell nên $, `, |, space đều an toàn.
+  // Chỉ chặn null byte vì OS sẽ truncate path tại \0.
+  if (p.includes('\0')) {
     throw new Error(`Path chứa ký tự không hợp lệ: ${p}`);
   }
   return p;
