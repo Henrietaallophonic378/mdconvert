@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.0.6 — 2026-03-30
+
+### Bug Fix
+
+- **API key bị ghi đè khi lưu Settings** — Khi mở `/settings`, API key được trả về dạng masked (`AIza...xxxx`). Nếu user chỉ sửa prompt rồi nhấn Lưu, masked string sẽ được encrypt và ghi đè key thật trong DB → mọi convert sau đó đều fail với `API_KEY_INVALID`. Fix: bỏ `ai_api_key` khỏi payload PUT nếu vẫn là masked format, chỉ lưu khi user nhập key mới thực sự.
+
+---
+
 ## v1.0.5 — 2026-03-30
 
 ### Bug Fix
